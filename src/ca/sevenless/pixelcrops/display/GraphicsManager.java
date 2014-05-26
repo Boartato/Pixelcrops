@@ -13,10 +13,13 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import ca.sevenless.pixelcrops.gui.GameKeyListener;
 import ca.sevenless.pixelcrops.gui.GameMouseListener;
 import ca.sevenless.pixelcrops.init.GameInitialization;
+import ca.sevenless.pixelcrops.util.ImageLoader;
+import ca.sevenless.pixelcrops.world.Tile;
 
 
 
@@ -31,6 +34,9 @@ public class GraphicsManager {
 	
 	private GameInitialization main;
 	private Thread displayThread;
+	
+	protected DisplayFarm displayFarm;
+	private BufferedImage testImage;
 	
 	private boolean fullscreen = false;
 	private int frameRate;
@@ -51,12 +57,32 @@ public class GraphicsManager {
 		fullscreen = _fullscreen;
 		frameRate = _frameRate;
 		
+		loadGraphicResources();
+		initDisplayObjects();
 		initThreadedCanvas();
 		initFrame();
 		attachListeners(keyListener, mouseListener);
 		
 		displayThread.start();
 		makeVisible();
+	}
+	
+	private void loadGraphicResources(){
+		try {
+			testImage = ImageLoader.createImageIO("yellowcircle.png");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void initDisplayObjects(){
+		Tile[][] tileSet = new Tile[2][2];
+		tileSet[0][0] = new Tile(testImage, "testTile");
+		tileSet[1][0] = new Tile(testImage, "testTile");
+		tileSet[1][1] = new Tile(testImage, "testTile");
+		tileSet[0][1] = new Tile(testImage, "testTile");
+		
+		displayFarm = new DisplayFarm(tileSet);
 	}
 
 	/**
@@ -94,7 +120,7 @@ public class GraphicsManager {
 	 * Creates ThreadedCanvas object and prepares itd for threading.
 	 */
 	private void initThreadedCanvas(){
-		canvas = new ThreadedCanvas(frameRate);
+		canvas = new ThreadedCanvas(frameRate, this);
 		displayThread = new Thread(canvas);
 	}
 	

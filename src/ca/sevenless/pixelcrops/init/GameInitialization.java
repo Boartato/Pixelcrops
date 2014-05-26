@@ -26,8 +26,8 @@ public class GameInitialization {
 	private int invX = 4;
 	private int invY = 4;
 	//Setup values for farm dimensions
-	private int farmX = 2;
-	private int farmY = 3;
+	private int farmX = 1;
+	private int farmY = 1;
 	
 	/**
 	 * Handles game setup by initializing graphics, data and socket managers

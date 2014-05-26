@@ -25,13 +25,22 @@ public class Coord {
 	}
 	
 	/**
+	 * @param topLeft
+	 */
+	public Coord(Coord copiedCoord) {
+		this.x = copiedCoord.getX();
+		this.y = copiedCoord.getY();
+	}
+
+	/**
 	 * Modifies a coordinate by adding the differences provided
 	 * @param deltaX
 	 * @param deltaY
 	 */
-	public void transform (int deltaX, int deltaY){
+	public Coord transform (int deltaX, int deltaY){
 		x += deltaX;
 		y += deltaY;
+		return this;
 	}
 	
 	/**

@@ -31,11 +31,15 @@ public class ThreadedCanvas extends Canvas implements Runnable{
 	private BufferedImage buffer;
 	//The desired framerate, rounding may make actual framerate differ slightly
 	int frameRate;
+	
+	//Location of display objects used for displaying Pixelcrops objects like farms and etc
+	GraphicsManager graphicsManager;
 	//For graceful cleanup of thread resources
 	boolean notShutdown = true;
 	
-	public ThreadedCanvas(int initialFrameRate){
+	public ThreadedCanvas(int initialFrameRate, GraphicsManager graphicsManager){
 		frameRate = initialFrameRate;
+		this.graphicsManager = graphicsManager;
 	}
 	
 	
@@ -58,21 +62,21 @@ public class ThreadedCanvas extends Canvas implements Runnable{
         Graphics2D screenBuffer2D = (Graphics2D) bufferG;
         refreshScreen(screenBuffer2D);
         
-        Farm test = new Farm(3,3);
+        Farm test = new Farm(2,2);
         test.sowSeed(0,0,new Berry(255,0,0));
-        test.sowSeed(1,2,new Berry(100,100,100));
+        test.sowSeed(1,1,new Berry(100,100,100));
         
         while (!test.peekField(0,0).isHarvestable()){
         	test.waterField(0,0);
         	test.incrementAge();
         }
         
-        while (!test.peekField(1,2).isHarvestable()){
-        	test.waterField(1,2);
+        while (!test.peekField(1,1).isHarvestable()){
+        	test.waterField(1,1);
         	test.incrementAge();
         }
         
-        drawFarm(0,0,100,100,test,screenBuffer2D);
+        graphicsManager.displayFarm.drawFarm(0,0,100,100,test,screenBuffer2D);
         
         Sprite testSprite = null;
 		try {
@@ -90,74 +94,6 @@ public class ThreadedCanvas extends Canvas implements Runnable{
         screen.drawImage(buffer, 0, 0, this);
 	}
 	
-	private void drawFarm(int x, int y, int sizeX, int sizeY, FarmInterface farm, Graphics2D buf2d){
-		int fieldsX = farm.getX();
-		int fieldsY = farm.getY();
-		
-		int fieldWidth = (x+sizeX) / fieldsX;
-		int fieldHeight = (y+sizeY) / fieldsY;
-		
-		
-		int fieldSize = fieldWidth;
-		if (fieldWidth > fieldHeight)
-			fieldSize = fieldHeight;
-		
-		for (int j = 0; j < fieldsX; j++)
-			for (int i = 0; i < fieldsY; i++){
-				Plant thisPlant = farm.peekField(j, i);
-				int thisX = x+j*fieldWidth;
-				int thisY = y+i*fieldWidth;
-				
-				if (thisPlant != null)
-					drawPlant(thisPlant, thisX, thisY, fieldSize, buf2d);
-				
-			}
-		
-		
-		
-	}
-	
-	/**
-	 * Draws a bush with 3 berries on it of the colours selected on the given Graphics2D object. The drawn object 
-	 * autoscales with the given dimensions.
-	 * 
-	 * @param berry colour of berries
-	 * @param plant colour of plant
-	 * @param x top left edge of plant
-	 * @param y top left edge of plant
-	 * @param size length of edges of the plant object
-	 * @param hasBerry whether or not berries are visible on the plant
-	 * @param buf2d the Graphics2D buffer that the plant will be drawn to
-	 */
-	private void drawPlant(Plant plant, int x, int y, int size, Graphics2D buf2d){
-		
-		Color berry = plant.getBerryColor();
-		
-		//Draw the bush itself
-		buf2d.setColor(plant.getLeafColor());
-		buf2d.fillRect(x,y,size,size);
-		
-		//If the berries are present, draws them
-		if (plant.isHarvestable()){
-			drawColoredSquare(berry, x+size/6, y+size/5, size/6, buf2d);
-			drawColoredSquare(berry, x+size-size/6*2, y+size/5, size/6, buf2d);
-			drawColoredSquare(berry, x+size/2-(size/12), y+size-size/6*2, size/6, buf2d);
-		}
-	}
-	
-	/**
-	 * Draws a square of the provided colour/size at the given x/y coords on the provided 2D buffer.
-	 * 
-	 * @param color
-	 * @param x
-	 * @param y
-	 * @param size
-	 * @param screenBuffer2D
-	 */
-	private void drawColoredSquare(Color color, int x, int y, int size, Graphics2D screenBuffer2D){
-		screenBuffer2D.setColor(color);
-		screenBuffer2D.fillRect( x, y, size, size);
-	}
 	
 	/**
 	 * Refreshes the buffer to a black background for drawing the next image on

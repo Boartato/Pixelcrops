@@ -87,35 +87,4 @@ public class Inventory<T> implements Serializable, InventoryInterface<T>{
 		return invSlots[x][y];
 	}
 	
-	/*
-	 * Test Harness
-	 */
-	public static void main(String[] args){
-		Integer x = 5;
-		Integer y = 5;
-		
-		Inventory<Integer> test = new Inventory<Integer>(x,y);
-		
-		for (int j = 0; j < x; j++)
-			for (int i = 0; i < y - 1; i++)
-				test.addItem(new Integer(i));
-		
-		test.addItem(new Integer(5));
-		test.addItem(new Integer(4));
-		System.out.println(test.removeItem(1,1));
-		test.addItem(new Integer(9), 1,1);
-		test.addItem(new Integer(9), 4,4);
-		System.out.println(test.addItem(new Integer(8),1,1));
-		//test.removeItem(2,2);
-		
-		for (int j = 0; j < x; j++){
-			System.out.println(" ");
-			for (int i = 0; i < y; i++)
-				System.out.print(" " + test.peekItem(j,i));
-		}	
-		
-		
-	}
-
-	
 }

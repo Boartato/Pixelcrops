@@ -25,11 +25,24 @@ public class Coord {
 	}
 	
 	/**
+	 * Creates a new Coord that is a copy of the provided Coord object
+	 * 
 	 * @param topLeft
 	 */
 	public Coord(Coord copiedCoord) {
 		this.x = copiedCoord.getX();
 		this.y = copiedCoord.getY();
+	}
+	
+	/**
+	 * Creates a copy of the coord provided and transforms it with the provided deltaX and deltaY values
+	 * @param copiedCoord
+	 * @param deltaX
+	 * @param deltaY
+	 */
+	public Coord(Coord copiedCoord, int deltaX, int deltaY) {
+		this.x = copiedCoord.getX() + deltaX;
+		this.y = copiedCoord.getY() + deltaY;
 	}
 
 	/**
@@ -48,9 +61,10 @@ public class Coord {
 	 * @param newX
 	 * @param newY
 	 */
-	public void set (int newX, int newY){
+	public Coord set (int newX, int newY){
 		x = newX;
 		y = newY;
+		return this;
 	}
 
 	/**

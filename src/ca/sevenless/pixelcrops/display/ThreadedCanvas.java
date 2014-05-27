@@ -28,12 +28,12 @@ public class ThreadedCanvas extends Canvas implements Runnable{
 	private static final long serialVersionUID = 1L;
 	
 	//Buffer images are drawn to before posting the composit image to the screen for the user to see
-	private BufferedImage buffer;
+	protected BufferedImage buffer;
 	//The desired framerate, rounding may make actual framerate differ slightly
 	int frameRate;
 	
 	//Location of display objects used for displaying Pixelcrops objects like farms and etc
-	GraphicsManager graphicsManager;
+	protected GraphicsManager graphicsManager;
 	//For graceful cleanup of thread resources
 	boolean notShutdown = true;
 	
@@ -62,34 +62,7 @@ public class ThreadedCanvas extends Canvas implements Runnable{
         Graphics2D screenBuffer2D = (Graphics2D) bufferG;
         refreshScreen(screenBuffer2D);
         
-        Farm test = new Farm(2,2);
-        test.sowSeed(0,0,new Berry(255,0,0));
-        test.sowSeed(1,1,new Berry(100,100,100));
-        
-        while (!test.peekField(0,0).isHarvestable()){
-        	test.waterField(0,0);
-        	test.incrementAge();
-        }
-        
-        while (!test.peekField(1,1).isHarvestable()){
-        	test.waterField(1,1);
-        	test.incrementAge();
-        }
-        
-        graphicsManager.displayFarm.drawFarm(0,0,100,100,test,screenBuffer2D);
-        
-        Sprite testSprite = null;
-		try {
-			testSprite = new Sprite("yellowcircle.png");
-		} catch (SpriteImageMissingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
-		Coord testCoord = new Coord(100,100);
-		
-		testSprite.drawTL(screenBuffer2D,testCoord);
-		testSprite.drawFB(screenBuffer2D,testCoord);
+        //TODO drawing code goes here
 		
         screen.drawImage(buffer, 0, 0, this);
 	}
@@ -99,7 +72,7 @@ public class ThreadedCanvas extends Canvas implements Runnable{
 	 * Refreshes the buffer to a black background for drawing the next image on
 	 * @param screenBuffer
 	 */
-	private void refreshScreen(Graphics2D screenBuffer2D){
+	protected void refreshScreen(Graphics2D screenBuffer2D){
 		screenBuffer2D.setColor(Color.black);
         screenBuffer2D.fillRect(0, 0, getWidth(), getHeight());
 	}
@@ -109,13 +82,16 @@ public class ThreadedCanvas extends Canvas implements Runnable{
 		
 		while (notShutdown){
 			this.repaint();
+			
+			try {
+				Thread.sleep(1000/frameRate);
+			} catch (InterruptedException e) {
+				//Expected during shutdown
+				System.out.println("Canvas redraw thread shutting down");
+			}
+			
 		}
 		
-		try {
-			Thread.sleep(1000/frameRate);
-		} catch (InterruptedException e) {
-			//Expected during shutdown
-		}
 	}
 	
 	

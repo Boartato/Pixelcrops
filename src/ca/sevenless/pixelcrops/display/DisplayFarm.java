@@ -42,7 +42,7 @@ public class DisplayFarm {
 		
 		for (int j = 0; j < fieldsX; j++)
 			for (int i = 0; i < fieldsY; i++){
-				Plant thisPlant = farm.peekField(j, i);
+				Plant thisPlant = farm.getField(j, i);
 				int thisX = x+j*fieldWidth;
 				int thisY = y+i*fieldWidth;
 				

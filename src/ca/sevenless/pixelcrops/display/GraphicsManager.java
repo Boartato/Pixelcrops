@@ -36,7 +36,6 @@ public class GraphicsManager {
 	private Thread displayThread;
 	
 	protected DisplayFarm displayFarm;
-	private BufferedImage testImage;
 	
 	private boolean fullscreen = false;
 	private int frameRate;
@@ -51,6 +50,7 @@ public class GraphicsManager {
 	public GraphicsManager(	GameInitialization _main,
 							GameKeyListener keyListener, 
 							GameMouseListener mouseListener, 
+							Tile[][] tileSet,
 							boolean _fullscreen, 
 							int _frameRate) {
 		main = _main;
@@ -58,7 +58,7 @@ public class GraphicsManager {
 		frameRate = _frameRate;
 		
 		loadGraphicResources();
-		initDisplayObjects();
+		initDisplayObjects(tileSet);
 		initThreadedCanvas();
 		initFrame();
 		attachListeners(keyListener, mouseListener);
@@ -68,21 +68,17 @@ public class GraphicsManager {
 	}
 	
 	private void loadGraphicResources(){
-		try {
-			testImage = ImageLoader.createImageIO("yellowcircle.png");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+		//TODO load graphical resources required from memory here
+		
 	}
 	
-	private void initDisplayObjects(){
-		Tile[][] tileSet = new Tile[2][2];
-		tileSet[0][0] = new Tile(testImage, "testTile");
-		tileSet[1][0] = new Tile(testImage, "testTile");
-		tileSet[1][1] = new Tile(testImage, "testTile");
-		tileSet[0][1] = new Tile(testImage, "testTile");
+	private void initDisplayObjects(Tile[][] tileSet){
+		
+		//TODO initialize Display objects from passed game logic information
 		
 		displayFarm = new DisplayFarm(tileSet);
+		
 	}
 
 	/**

@@ -22,6 +22,13 @@ public class GameInitialization {
 
 	private World gameWorld;
 	
+	/*
+	 * All setup code that is hard coded should be placed below this comment and filtered into the
+	 * appropriate places via constructor params. No other variable setup code should be in src files.
+	 * Test files can be used for that, bad sevenless!
+	 */
+	
+	
 	//Setup values for inventory dimensions
 	private int invX = 4;
 	private int invY = 4;
@@ -36,15 +43,22 @@ public class GameInitialization {
 		
 		initListeners();
 		initGameWorld();
-		graphicsManager = new GraphicsManager(this, keyListener, mouseListener, false, 30);
+		//TODO don't pass a null tileSet like you're doing you lazy bumkisser
+		graphicsManager = new GraphicsManager(this, keyListener, mouseListener, null, false, 30);
 	}
 
+	/**
+	 * Initializes the game world
+	 */
 	private void initGameWorld(){
 		
 		gameWorld = new World(farmX, farmY, invX, invY);
 		
 	}
 	
+	/*
+	 * Initializes the listeners to be attached to the canvas
+	 */
 	private void initListeners(){
 		keyListener = new GameKeyListener(this);
 		mouseListener = new GameMouseListener(this, null);
@@ -54,12 +68,15 @@ public class GameInitialization {
 	 * Calls the appropriate code to cleanup client resources before program closure
 	 */
 	public void endProgram() {
-	
-		//Request logout from the server before allowing the program to close
+		
+		//TODO Actually do cleanup
 		System.exit(0);
 		
 	}
 	
+	/**
+	 * initialization code for PixelCrops
+	 */
 	public static void main(String[] args){
 		@SuppressWarnings("unused")
 		GameInitialization main = new GameInitialization();

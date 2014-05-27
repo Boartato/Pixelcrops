@@ -47,7 +47,7 @@ public class Farm implements Serializable, FarmInterface{
 	 * @param y
 	 * @return
 	 */
-	public Plant peekField(int x, int y){
+	public Plant getField(int x, int y){
 		if (field[x][y] != null)
 			return field[x][y];
 		return null;

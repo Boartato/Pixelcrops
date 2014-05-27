@@ -3,7 +3,6 @@
  */
 package ca.sevenless.pixelcrops.world;
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 /**
@@ -12,7 +11,7 @@ import java.awt.image.BufferedImage;
  */
 public class Tile {
 
-	private BufferedImage tileImage;
+	private BufferedImage tileImage;//TODO convert image code into display specific part of the project
 	private String tileName;
 	
 	public Tile(BufferedImage tileImage, String tileName){

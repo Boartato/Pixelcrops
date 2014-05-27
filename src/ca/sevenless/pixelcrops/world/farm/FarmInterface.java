@@ -25,7 +25,7 @@ public interface FarmInterface {
 	 * @param y
 	 * @return
 	 */
-	public Plant peekField(int x, int y);
+	public Plant getField(int x, int y);
 
 	/**
 	 * Calls the water function from plant if a plant is present on the field x,y

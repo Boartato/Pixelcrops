@@ -26,6 +26,12 @@ public class Sprite {
 	int baseX;
 	int baseY;
 	
+	
+	/**
+	 * Creates a new sprite, loading the base image from the path name given
+	 * @param imageName
+	 * @throws SpriteImageMissingException
+	 */
 	public Sprite(String imageName) throws SpriteImageMissingException{
 		
 		try {

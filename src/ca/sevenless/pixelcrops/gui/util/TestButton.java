@@ -5,7 +5,7 @@ import java.awt.Color;
 import ca.sevenless.pixelcrops.gui.GameKeyListener;
 import ca.sevenless.pixelcrops.gui.GameMouseListener;
 
-public class TestButton extends Button {
+public class TestButton extends HitBox {
 	
 	private GameMouseListener mouseListener;
 	public TestButton(ButtonManager parent, double x1, double y1, double x2, double y2 ) 

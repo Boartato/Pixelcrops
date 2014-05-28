@@ -6,27 +6,22 @@ package ca.sevenless.pixelcrops.gui.util;
 import java.util.ArrayList;
 
 import ca.sevenless.pixelcrops.gui.GameMouseListener;
+import ca.sevenless.pixelcrops.util.BoxCoord;
 
 
 /**
- * @author Sevenless
+ * @author anooptoor, Sevenless
  *
  */
 public class ButtonManager{
 
-	private ArrayList<Button> buttonList;
+	private ArrayList<HitBox> buttonList;
 	
-	private double x1;
-	private double y1;
-	private double x2;
-	private double y2;
+	BoxCoord box;
 	
-	public ButtonManager(double x1, double y1, double x2, double y2){
-		this.x1 = x1;
-		this.y1 = y1;
-		this.x2 = x2;
-		this.y2 = y2;
-		buttonList = new ArrayList<Button>();
+	public ButtonManager(BoxCoord _box){
+		box = _box;
+		buttonList = new ArrayList<HitBox>();
 		
 	}
 	
@@ -35,10 +30,45 @@ public class ButtonManager{
 	 * Adds a button to the list whose parent is preset to this UserInterface
 	 * @param newButton
 	 */
-	public void addButton(Button newButton){
-		buttonList.add(newButton);
+	public void addButton(Button b)
+	{
+		buttonList.add(b);
 	}
 	
+	
+	/**
+	 * Getter for Top Left X coordinate of hitbox
+	 * @return
+	 */
+	public double getX1()
+	{
+		return box.getTL().getX(); 
+	}
+	/**
+	 * Getter for Bottom Right X coordinate of hitbox
+	 * @return
+	 */
+	public double getX2()
+	{
+		
+		return box.getBR().getX(); 
+	}
+	/**
+	 * Getter for Top Left Y coordinate of hitbox
+	 * @return
+	 */
+	public double getY1()
+	{
+		return box.getTL().getY(); 
+	}
+	/**
+	 * Getter for Bottom Right Y coordinate of hitbox
+	 * @return
+	 */
+	public double getY2()
+	{
+		return box.getBR().getY(); 
+	}
 	
 	/**
 	 * Cycles through all of the buttons and passes them the mouse Coords to see if they were clicked
@@ -48,6 +78,14 @@ public class ButtonManager{
 	 */
 	public void clickEvent(double mouseX, double mouseY){
 		
+		double x1 = this.getX1();
+		double x2 = this.getX2();
+		double y1 = this.getY1(); 
+		double y2 = this.getY2();
+		
+		
+		
+		
 		if(x1 <= mouseX && x2 >= mouseX && y1 <= mouseY && y2 >= mouseY)
 		{
 			double relMouseX = mouseX - x1;
@@ -55,7 +93,7 @@ public class ButtonManager{
 			double relMouseY = mouseY - y1;
 			//System.out.println("Y: " + relMouseY);
 		
-			for (Button b : buttonList)
+			for (HitBox b : buttonList)
 			{
 				System.out.println(relMouseX + " " + relMouseY);
 		

@@ -21,19 +21,28 @@ public class World implements Serializable{
 	
 	private FarmInterface playerFarm;
 	private InventoryInterface<Berry> playerInventory;
+	private Tile[][] worldTileSet;
 	
 	
 	public World(int farmX, int farmY, int invX, int invY){
 		
 		playerFarm = new Farm(farmX, farmY);
 		playerInventory = new Inventory<Berry>(invX, invY);
-		
-		playerInventory.addItem(new Berry(150,150,150));
-		playerInventory.addItem(new Berry(150,150,150));
-		playerInventory.addItem(new Berry(150,150,150));
+		worldTileSet = makeBlankTileSet(farmX,farmY);
 		
 		playerFarm.sowSeed(0,0, new Berry(150,150,150));
 		
+	}
+	
+	private Tile[][] makeBlankTileSet(int farmX, int farmY){
+		
+		Tile[][] newTileSet = new Tile[farmX][farmY];
+		
+		for (int j = 0; j < farmX; j++)
+			for (int i = 0; i < farmY; i++)
+				newTileSet[j][i] = new Tile(null);
+		
+		return newTileSet;
 	}
 	
 	public void saveWorld(String path){

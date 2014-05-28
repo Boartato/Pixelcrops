@@ -18,10 +18,18 @@ import ca.sevenless.pixelcrops.world.farm.Plant;
  */
 public class DisplayFarm {
 	
-	private Tile[][] tileSet;
+	private DisplayTile[][] tileSet;
 	
 	public DisplayFarm(Tile[][] tileSet){
-		this.tileSet = tileSet;
+		this.tileSet = makeDisplayTiles(tileSet);
+	}
+	
+	private DisplayTile[][] makeDisplayTiles(Tile[][] tileSet){
+		DisplayTile[][] displayTileSet = new DisplayTile[tileSet.length][tileSet[0].length];
+		
+		
+		
+		return displayTileSet;
 	}
 
 	void drawFarm(int x, int y, int sizeX, int sizeY, FarmInterface farm, Graphics2D screenBuffer2d){
@@ -90,7 +98,6 @@ public class DisplayFarm {
 	
 	private void drawTileSet(Coord coordTL, Coord coordBR, Graphics2D screenBuffer2d){
 		
-
 		int tileWidth = (coordBR.getX() - coordTL.getX() ) / tileSet.length;
 		int tileHeight = (coordBR.getY() - coordTL.getY()) / tileSet[0].length;
 		
@@ -98,27 +105,12 @@ public class DisplayFarm {
 			for (int i = 0; i < tileSet[0].length; i++){
 				Coord topLeft =  new Coord(coordTL.getX()+j*tileWidth, coordTL.getY()+i*tileHeight);
 				Coord bottomRight = new Coord(topLeft).transform(tileWidth,tileHeight);
-				drawTile(tileSet[j][i],topLeft, bottomRight, screenBuffer2d);
+				tileSet[j][i].drawTile(topLeft, bottomRight, screenBuffer2d);
 			}
 		
 	}
 	
-	/**
-	 * Draws a tile between the two coordinates given and autosizes the image onto the provided Graphics2D object
-	 * 
-	 * @param tile Tile being draw
-	 * @param topLeft Coordinates of the top left corner of the drawn tile
-	 * @param bottomRight Coordinates of the bottom right corner of the drawn tile
-	 * @param screenBuffer2d Graphics2D object the tiles are being drawn to
-	 */
-	private void drawTile(Tile tile, Coord topLeft, Coord bottomRight, Graphics2D screenBuffer2d){
-		
-		BufferedImage tileImage = tile.getTileImage();
-		
-		screenBuffer2d.drawImage(tileImage, 
-        		topLeft.getX(),topLeft.getY(),
-        		bottomRight.getX()-topLeft.getX(),bottomRight.getY() - topLeft.getY(), null);
-	}
+
 	
 	
 	

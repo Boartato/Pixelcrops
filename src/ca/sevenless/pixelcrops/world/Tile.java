@@ -11,21 +11,12 @@ import java.awt.image.BufferedImage;
  */
 public class Tile {
 
-	private BufferedImage tileImage;//TODO convert image code into display specific part of the project
 	private String tileName;
 	
-	public Tile(BufferedImage tileImage, String tileName){
-	
-		this.tileImage = tileImage;
+	public Tile(String tileName){
+		
 		this.tileName = tileName;
 		
-	}
-
-	/**
-	 * @return the tileImage
-	 */
-	public BufferedImage getTileImage() {
-		return tileImage;
 	}
 
 	/**

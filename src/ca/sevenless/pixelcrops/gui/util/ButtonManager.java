@@ -97,7 +97,7 @@ public class ButtonManager{
 			{
 				System.out.println(relMouseX + " " + relMouseY);
 		
-				b.clickCheck(relMouseX, relMouseY);;
+				b.clickCheck(relMouseX, relMouseY);
 			}
 			
 		}

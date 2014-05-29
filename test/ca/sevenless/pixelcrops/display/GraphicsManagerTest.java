@@ -46,10 +46,6 @@ public class GraphicsManagerTest extends GraphicsManager{
 	
 	private void initDisplayObjects(){
 		Tile[][] tileSet = new Tile[2][2];
-		tileSet[0][0] = new Tile(testImage, "testTile");
-		tileSet[1][0] = new Tile(testImage, "testTile");
-		tileSet[1][1] = new Tile(testImage, "testTile");
-		tileSet[0][1] = new Tile(testImage, "testTile");
 		
 		displayFarm = new DisplayFarm(tileSet);
 	}

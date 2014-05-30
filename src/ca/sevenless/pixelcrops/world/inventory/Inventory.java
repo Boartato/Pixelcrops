@@ -30,6 +30,7 @@ public class Inventory<T> implements Serializable, InventoryInterface<T>{
 	@SuppressWarnings("unchecked")
 	public Inventory(int x, int y){
 		invSlots = (T[][]) new Object[x][y];
+        pickupSlot = (T) new Object();
 		overflow = new ArrayList<T>();
 	}
 	

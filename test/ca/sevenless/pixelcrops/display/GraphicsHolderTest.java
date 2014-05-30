@@ -6,6 +6,7 @@ package ca.sevenless.pixelcrops.display;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import ca.sevenless.pixelcrops.display.util.GraphicsHolder;
 import ca.sevenless.pixelcrops.util.ImageLoader;
 
 /**

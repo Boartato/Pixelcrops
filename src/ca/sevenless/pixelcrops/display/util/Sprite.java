@@ -1,12 +1,13 @@
 /**
  * 
  */
-package ca.sevenless.pixelcrops.display;
+package ca.sevenless.pixelcrops.display.util;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import ca.sevenless.pixelcrops.display.util.GraphicsHolder.GraphicNotFoundException;
 import ca.sevenless.pixelcrops.util.Coord;
 import ca.sevenless.pixelcrops.util.ImageLoader;
 
@@ -32,12 +33,12 @@ public class Sprite {
 	 * @param imageName
 	 * @throws SpriteImageMissingException
 	 */
-	public Sprite(String imageName) throws SpriteImageMissingException{
+	public Sprite(String imageName, GraphicsHolder graphicsHolder) throws SpriteImageMissingException{
 		
 		try {
-			graphic = ImageLoader.createImageIO(imageName);
-		} catch (IOException e) {
-			throw new SpriteImageMissingException("Sprite failed to load");
+			graphic = graphicsHolder.find(imageName);
+		} catch (GraphicNotFoundException e) {
+			throw new SpriteImageMissingException("Sprite failed to find requested image from the provided GraphicsHolder");
 		}
 		
 		width = graphic.getWidth();
@@ -70,6 +71,19 @@ public class Sprite {
 		screenBuffer2D.drawImage(graphic, 
 				coord.getX()+baseX, coord.getY()+baseY,
 				width,height, null);
+	}
+	
+	/**
+	 * Gives a descriptive name to an exeception thrown by this class alone.
+	 * @author Sevenless
+	 *
+	 */
+	public class SpriteImageMissingException extends Exception{
+		private static final long serialVersionUID = 1L;
+
+		public SpriteImageMissingException(String message){
+			super(message);
+		}
 	}
 	
 }

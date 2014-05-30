@@ -1,8 +1,11 @@
 package ca.sevenless.pixelcrops.util;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
+
 import java.net.URL;
 
 public class ImageLoader {
@@ -29,6 +32,19 @@ public class ImageLoader {
 		}
 		
         return image;
-    }   
+    }
+
+	/**
+	 * Loads a file from memory as a BufferedImage
+	 * 
+	 * @param file the image file being loaded from memory
+	 * @return returns the loaded image
+	 * @throws IOException
+	 */
+	public static BufferedImage createImageFromFile(File file) throws IOException {
+		BufferedImage image = null;
+		image = ImageIO.read(file);
+		return image;
+	}   
     
 }

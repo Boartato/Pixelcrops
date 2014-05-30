@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ca.sevenless.pixelcrops.display;
+package ca.sevenless.pixelcrops.display.util;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -45,9 +45,12 @@ public class GraphicsHolder {
 	/**
 	 * Searches the name list until the name is found and returns the graphic at the cooresponding location in
 	 * the graphic list. GraphicNotFoundException is thrown if no such name exists on the list.
-	 * @param graphicName
-	 * @return
-	 * @throws GraphicNotFoundException
+	 * 
+	 * This method, and stored names, are case sensitive.
+	 * 
+	 * @param graphicName case sensitive name of the desired graphic
+	 * @return BufferedImage of the desired graphic if found
+	 * @throws GraphicNotFoundException Thrown when the desired graphic is not found
 	 */
 	public BufferedImage find (String graphicName) throws GraphicNotFoundException{
 		if (names.size() > 0){

@@ -48,6 +48,23 @@ public class Sprite {
 		baseY = height;
 		
 	}
+	
+	public Sprite(String imageName) throws SpriteImageMissingException{
+	
+		try {
+			graphic = ImageLoader.createImageIO(imageName);
+		} catch (IOException e) {
+			throw new SpriteImageMissingException("Could not sprite load image from path given");
+		}
+		
+		width = graphic.getWidth();
+		height = graphic.getHeight();
+		
+		baseX = width/2;
+		baseY = height;
+		
+	}
+	
 	/**
 	 * Draws the sprite at the given location, matching up the top left corner of the image
 	 * with the coords given

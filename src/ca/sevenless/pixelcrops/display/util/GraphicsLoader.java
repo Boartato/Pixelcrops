@@ -48,14 +48,14 @@ public class GraphicsLoader {
 	
 	/**
 	 * Loads accepted image formated files stored directly inside the res folder, and ignores any other files/directories inside.
-	 * @param resourceDirectory
+	 * @param topLevelDirectory
 	 * @param graphicsHolder
 	 * @throws IOException 
 	 * @throws NoAcceptedImageFormatsException 
 	 */
-	public void loadGraphics(String resourceDirectory, GraphicsHolder graphicsHolder) throws IOException, NoAcceptedImageFormatsException{
+	public void loadGraphics(String topLevelDirectory, GraphicsHolder graphicsHolder) throws IOException, NoAcceptedImageFormatsException{
 		
-		File[] possibleGraphics = new File(resourceDirectory).listFiles();
+		File[] possibleGraphics = new File(topLevelDirectory).listFiles();
 		for (File thisFile : possibleGraphics){
 			String name = thisFile.getName();
 			if (isAcceptedImageFormat(name)){

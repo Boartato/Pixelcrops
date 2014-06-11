@@ -9,12 +9,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import ca.sevenless.pixelcrops.util.Coord;
-import ca.sevenless.pixelcrops.world.farm.Farm;
-import ca.sevenless.pixelcrops.world.farm.FarmInterface;
-import ca.sevenless.pixelcrops.world.farm.Plant;
-import ca.sevenless.pixelcrops.world.inventory.Berry;
-
 
 /**
  * Handles the program specific painting of the canvas for the GameProject, as well as being the location for threaded run
@@ -33,11 +27,11 @@ public class ThreadedCanvas extends Canvas implements Runnable{
 	int frameRate;
 	
 	//Location of display objects used for displaying Pixelcrops objects like farms and etc
-	protected GraphicsManager graphicsManager;
+	protected WindowManager graphicsManager;
 	//For graceful cleanup of thread resources
 	boolean notShutdown = true;
 	
-	public ThreadedCanvas(int initialFrameRate, GraphicsManager graphicsManager){
+	public ThreadedCanvas(int initialFrameRate, WindowManager graphicsManager){
 		frameRate = initialFrameRate;
 		this.graphicsManager = graphicsManager;
 	}

@@ -3,7 +3,11 @@
  */
 package ca.sevenless.pixelcrops.init;
 
-import ca.sevenless.pixelcrops.display.GraphicsManager;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+import ca.sevenless.pixelcrops.display.WindowManager;
 import ca.sevenless.pixelcrops.gui.GameKeyListener;
 import ca.sevenless.pixelcrops.gui.GameMouseListener;
 import ca.sevenless.pixelcrops.world.World;
@@ -16,7 +20,7 @@ import ca.sevenless.pixelcrops.world.World;
  */
 public class GameInitialization {
 
-	private GraphicsManager graphicsManager;
+	private WindowManager graphicsManager;
 	private GameKeyListener keyListener;
 	private GameMouseListener mouseListener;
 
@@ -35,15 +39,28 @@ public class GameInitialization {
 	private int farmX = 1;
 	private int farmY = 1;
 	
+	//Location of graphical resources
+	private String graphicResourceDirectory = "res";
+	private List<String> imageFormats = Arrays.asList(".png",".jpg");
+	
 	/**
 	 * Handles game setup by initializing graphics, data and socket managers
 	 */
 	public GameInitialization(){
-		
+
 		initListeners();
 		initGameWorld();
 		//TODO don't pass a null tileSet like you're doing you lazy bumkisser
-		graphicsManager = new GraphicsManager(this, keyListener, mouseListener, null, false, 30);
+		try {
+			graphicsManager = new WindowManager(this, 
+					keyListener, mouseListener, //Window listeners
+					graphicResourceDirectory, imageFormats,
+					null, false, 30);
+		} catch (IOException e) {
+			System.out.println("Graphics failed to load successfully");
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 	/**

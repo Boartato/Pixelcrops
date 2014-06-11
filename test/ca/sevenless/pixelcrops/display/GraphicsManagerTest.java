@@ -16,7 +16,7 @@ import ca.sevenless.pixelcrops.world.Tile;
  * @author Sevenless
  *
  */
-public class GraphicsManagerTest extends GraphicsManager{
+public class GraphicsManagerTest extends WindowManager{
 	
 
 	public BufferedImage testImage;

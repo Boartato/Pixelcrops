@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
  */
 
 
-public class InventoryButton extends Button {
+public class InventoryButton<T> extends Button {
 
     Inventory<T> inventory;
     boolean used;
@@ -21,7 +21,7 @@ public class InventoryButton extends Button {
         this.inventory = inventory;
         used = false;
         this.x = x;
-        this.y = y
+        this.y = y;
 
     }
     public void usedTrue()
@@ -41,8 +41,7 @@ public class InventoryButton extends Button {
         }
         else
         {
-            inventory.addInventory(inventory.removeItem(20,20)); //only works if byref
-
+            inventory.addItem(inventory.removeItem(20,20)); //only works if byref
         }
 
     }

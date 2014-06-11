@@ -1,5 +1,8 @@
-package ca.sevenless.pixelcrops.world.farm;
+package ca.sevenless.pixelcrops.world.logic;
+
 import java.util.*;
+
+import ca.sevenless.pixelcrops.world.farm.Farm;
 /**
  * 
  * @author anooptoor 

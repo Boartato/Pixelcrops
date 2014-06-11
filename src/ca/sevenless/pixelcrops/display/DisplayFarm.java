@@ -5,7 +5,6 @@ package ca.sevenless.pixelcrops.display;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
 import ca.sevenless.pixelcrops.util.Coord;
 import ca.sevenless.pixelcrops.world.Tile;

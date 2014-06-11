@@ -3,22 +3,21 @@
  */
 package ca.sevenless.pixelcrops.display;
 
-import java.awt.Canvas;
 import java.awt.Frame;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.Window;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import ca.sevenless.pixelcrops.display.util.GraphicsHolder;
+import ca.sevenless.pixelcrops.display.util.GraphicsLoader;
+import ca.sevenless.pixelcrops.display.util.GraphicsLoader.NoAcceptedImageFormatsException;
 import ca.sevenless.pixelcrops.gui.GameKeyListener;
 import ca.sevenless.pixelcrops.gui.GameMouseListener;
 import ca.sevenless.pixelcrops.init.GameInitialization;
-import ca.sevenless.pixelcrops.util.ImageLoader;
 import ca.sevenless.pixelcrops.world.Tile;
 
 
@@ -28,13 +27,14 @@ import ca.sevenless.pixelcrops.world.Tile;
  * @author Sevenless
  *
  */
-public class GraphicsManager {
+public class WindowManager {
 	private Frame frame;
 	private ThreadedCanvas canvas;
 	
 	private GameInitialization main;
 	private Thread displayThread;
 	
+	protected GraphicsHolder graphicsHolder;
 	protected DisplayFarm displayFarm;
 	
 	private boolean fullscreen = false;
@@ -45,19 +45,24 @@ public class GraphicsManager {
 	 * Initializes a frame and attaches the created canvas to it
 	 * @param mouseListener 
 	 * @param keyListener 
+	 * @param graphicResourceDirectory 
+	 * @param imageFormats 
 	 * @param _canvas
+	 * @throws IOException 
 	 */
-	public GraphicsManager(	GameInitialization _main,
+	public WindowManager(	GameInitialization _main,
 							GameKeyListener keyListener, 
 							GameMouseListener mouseListener, 
+							String graphicResourceDirectory, 
+							Iterable<String> imageFormats, 
 							Tile[][] tileSet,
 							boolean _fullscreen, 
-							int _frameRate) {
+							int _frameRate) throws IOException {
 		main = _main;
 		fullscreen = _fullscreen;
 		frameRate = _frameRate;
 		
-		loadGraphicResources();
+		loadGraphicResources(graphicResourceDirectory, imageFormats);
 		initDisplayObjects(tileSet);
 		initThreadedCanvas();
 		initFrame();
@@ -67,9 +72,27 @@ public class GraphicsManager {
 		makeVisible();
 	}
 	
-	private void loadGraphicResources(){
+	
+	/**
+	 * Loads graphics from the given resource directory after creating a GraphicsLoader class which loads files 
+	 * ending with the given acceptable imageFormats.
+	 * 
+	 * @param graphicResourceDirectory Name of the top level directory containing graphic resources
+	 * @param imageFormats Only files ending in these formats are loaded, others are ignored
+	 * @throws IOException Thrown if the loader encounters a system based input/output exception
+	 */
+	private void loadGraphicResources(String graphicResourceDirectory, Iterable<String> imageFormats) throws IOException{
 		
-		//TODO load graphical resources required from memory here
+		GraphicsLoader graphicsLoader = new GraphicsLoader(imageFormats);
+		graphicsHolder = new GraphicsHolder();
+		
+		try {
+			graphicsLoader.loadGraphics(graphicResourceDirectory, graphicsHolder);
+		} catch (NoAcceptedImageFormatsException e) {
+			System.out.println("Corrupted setup files, no acceptable image formats given in init");
+			e.printStackTrace();//Should only happen in case of corrupted setup files
+		}
+		
 		
 	}
 	

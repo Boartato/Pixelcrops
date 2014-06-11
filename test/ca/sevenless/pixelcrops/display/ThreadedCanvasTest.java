@@ -6,7 +6,7 @@ package ca.sevenless.pixelcrops.display;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-import ca.sevenless.pixelcrops.display.GraphicsManager;
+import ca.sevenless.pixelcrops.display.WindowManager;
 import ca.sevenless.pixelcrops.display.ThreadedCanvas;
 import ca.sevenless.pixelcrops.display.util.Sprite;
 import ca.sevenless.pixelcrops.display.util.Sprite.SpriteImageMissingException;
@@ -25,7 +25,7 @@ public class ThreadedCanvasTest extends ThreadedCanvas{
 	 * @param graphicsManager
 	 */
 	public ThreadedCanvasTest(int initialFrameRate,
-			GraphicsManager graphicsManager) {
+			WindowManager graphicsManager) {
 		super(initialFrameRate, graphicsManager);
 		// TODO Auto-generated constructor stub
 	}

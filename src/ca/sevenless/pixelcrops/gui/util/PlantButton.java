@@ -1,7 +1,12 @@
 package ca.sevenless.pixelcrops.gui.util;
 
+import java.awt.image.BufferedImage;
+
+import ca.sevenless.pixelcrops.util.BoxCoord;
+import ca.sevenless.pixelcrops.world.inventory.Inventory;
+
 /**
- * Created by Barry on 11/06/2014.
+ * Created by Anoop on 11/06/2014.
  * @param <T>
  */
 public class PlantButton<T> extends Button {

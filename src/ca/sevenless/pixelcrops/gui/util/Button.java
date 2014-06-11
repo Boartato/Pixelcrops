@@ -2,7 +2,6 @@ package ca.sevenless.pixelcrops.gui.util;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-
 import ca.sevenless.pixelcrops.util.BoxCoord;
 import ca.sevenless.pixelcrops.util.Coord;
 

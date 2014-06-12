@@ -17,6 +17,7 @@ public class Farm implements Serializable, FarmInterface{
 	
 	//2d array of plantable locations and their contained plants if they exist
 	private Plant[][] field;
+	private int turnsPassed = 0;
 	
 	/**
 	 * Creates an empty farm of size x*y
@@ -67,6 +68,8 @@ public class Farm implements Serializable, FarmInterface{
 	 * Runs through the possible field slots and increments the age of the plant if there is a plant in that field
 	 */
 	public void incrementAge(){
+		turnsPassed+=1;
+		
 		for (int j = 0; j < field.length; j++)
 			for (int i = 0; i < field[j].length; i++)
 				if (field[j][i] != null)
@@ -91,5 +94,8 @@ public class Farm implements Serializable, FarmInterface{
 		return field[0].length;
 	}
 	
+	public int getTurnsPassed(){
+		return turnsPassed;
+	}
 	
 }

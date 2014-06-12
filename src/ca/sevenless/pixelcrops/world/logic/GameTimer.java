@@ -3,6 +3,7 @@ package ca.sevenless.pixelcrops.world.logic;
 import java.util.*;
 
 import ca.sevenless.pixelcrops.world.farm.Farm;
+import ca.sevenless.pixelcrops.world.farm.FarmInterface;
 /**
  * 
  * @author anooptoor 
@@ -11,11 +12,13 @@ import ca.sevenless.pixelcrops.world.farm.Farm;
 public class GameTimer implements Runnable  {
 	
 	
-	Farm farm; 
+	FarmInterface farm; 
 	private volatile boolean complete;
 	long sleepTime;
 	Thread myThread = new Thread(this); 
-	public GameTimer(long _sleepTime, Farm _farm){	
+	
+	public GameTimer(long _sleepTime, FarmInterface _farm){	
+		
 		farm = _farm;
 		complete = false ; 
 		sleepTime = _sleepTime; 
@@ -38,7 +41,7 @@ public class GameTimer implements Runnable  {
 	public void stopTimer()
 	{
 		complete = true;
-		myThread.interrupt(); 
+		myThread.interrupt();
 		
 	}
 
@@ -52,12 +55,14 @@ public class GameTimer implements Runnable  {
 			
 			while(complete != true) //viable way to stop thread due to iterative nature of .sleep 
 			{
-				 
 				farm.incrementAge();
-				System.out.println("You're older!"); 
 				Thread.sleep(sleepTime);
 			}
-		} catch(InterruptedException e){System.out.println("GameTime Interrupt");}
+		
+		} catch(InterruptedException e) {
+			//Expected when game is paused
+			System.out.println("Game paused, currentTimer shutdown");
+		}
 		
 		
 	}

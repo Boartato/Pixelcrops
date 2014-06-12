@@ -43,4 +43,9 @@ public interface FarmInterface {
 	 * Runs through the possible field slots and increments the age of the plant if there is a plant in that field
 	 */
 	public void incrementAge();
+
+	/**
+	 * @return
+	 */
+	public int getTurnsPassed();
 }

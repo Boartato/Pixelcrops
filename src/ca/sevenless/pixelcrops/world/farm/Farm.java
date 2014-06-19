@@ -97,5 +97,5 @@ public class Farm implements Serializable, FarmInterface{
 	public int getTurnsPassed(){
 		return turnsPassed;
 	}
-	
+
 }

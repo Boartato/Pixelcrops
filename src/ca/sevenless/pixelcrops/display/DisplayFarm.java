@@ -17,20 +17,14 @@ import ca.sevenless.pixelcrops.world.farm.Plant;
  */
 public class DisplayFarm {
 	
-	private DisplayTile[][] tileSet;
+	FarmInterface farmInterface;
 	
-	public DisplayFarm(Tile[][] tileSet){
-		this.tileSet = makeDisplayTiles(tileSet);
+	public DisplayFarm(FarmInterface farmInterface){
+		this.farmInterface = farmInterface;
 	}
 	
-	private DisplayTile[][] makeDisplayTiles(Tile[][] tileSet){
-		DisplayTile[][] displayTileSet = new DisplayTile[tileSet.length][tileSet[0].length];
-		
-		
-		
-		return displayTileSet;
-	}
-
+	
+	
 	void drawFarm(int x, int y, int sizeX, int sizeY, FarmInterface farm, Graphics2D screenBuffer2d){
 		
 		
@@ -44,9 +38,7 @@ public class DisplayFarm {
 		int fieldSize = fieldWidth;
 		if (fieldWidth > fieldHeight)
 			fieldSize = fieldHeight;
-		
-		drawTileSet(new Coord(x,y), new Coord(x+sizeX,y+sizeY), screenBuffer2d);
-		
+			
 		for (int j = 0; j < fieldsX; j++)
 			for (int i = 0; i < fieldsY; i++){
 				Plant thisPlant = farm.getField(j, i);
@@ -94,24 +86,6 @@ public class DisplayFarm {
 			drawColoredSquare(berry, x+size/2-(size/12), y+size-size/6*2, size/6, screenBuffer2d);
 		}
 	}
-	
-	private void drawTileSet(Coord coordTL, Coord coordBR, Graphics2D screenBuffer2d){
-		
-		int tileWidth = (coordBR.getX() - coordTL.getX() ) / tileSet.length;
-		int tileHeight = (coordBR.getY() - coordTL.getY()) / tileSet[0].length;
-		
-		for (int j = 0; j < tileSet.length; j++)
-			for (int i = 0; i < tileSet[0].length; i++){
-				Coord topLeft =  new Coord(coordTL.getX()+j*tileWidth, coordTL.getY()+i*tileHeight);
-				Coord bottomRight = new Coord(topLeft).transform(tileWidth,tileHeight);
-				tileSet[j][i].drawTile(topLeft, bottomRight, screenBuffer2d);
-			}
-		
-	}
-	
-
-	
-	
 	
 	/**
 	 * Draws a square of the provided colour/size at the given x/y coords on the provided 2D buffer.

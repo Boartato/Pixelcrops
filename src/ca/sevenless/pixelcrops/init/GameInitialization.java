@@ -10,6 +10,7 @@ import java.util.List;
 import ca.sevenless.pixelcrops.display.WindowManager;
 import ca.sevenless.pixelcrops.gui.GameKeyListener;
 import ca.sevenless.pixelcrops.gui.GameMouseListener;
+import ca.sevenless.pixelcrops.util.BoxCoord;
 import ca.sevenless.pixelcrops.world.World;
 
 /**
@@ -36,8 +37,11 @@ public class GameInitialization {
 	private int invX = 4;
 	private int invY = 4;
 	//Setup values for farm dimensions
-	private int farmX = 1;
-	private int farmY = 1;
+	private int farmX = 5;
+	private int farmY = 5;
+	
+	//Default location of farm
+	private BoxCoord farmLocation= new BoxCoord(0,0,100,100);
 	
 	//milliseconds between gametimer farm updates
 	private int turnTime = 1000;
@@ -58,7 +62,11 @@ public class GameInitialization {
 			graphicsManager = new WindowManager(this, 
 					keyListener, mouseListener, //Window listeners
 					graphicResourceDirectory, imageFormats,
-					null, false, 30);
+					farmLocation, //BoxCoord for where to draw the farm
+					gameWorld.getFarmInterface(), //FarmListener
+					false,//Fullscren
+					30//Framerate
+					);
 		} catch (IOException e) {
 			System.out.println("Graphics failed to load successfully");
 			System.out.println(e.getMessage());

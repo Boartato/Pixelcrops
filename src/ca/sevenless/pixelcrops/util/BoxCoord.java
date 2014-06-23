@@ -9,6 +9,11 @@ public class BoxCoord {
 		setTL(_TL);
 		setBR(_BR); 
 	}
+	
+	public BoxCoord(int x1, int y1, int x2, int y2){
+		setTL(new Coord(x1,y1));
+		setBR(new Coord(x2,y2));
+	}
 
 	public Coord getTL() {
 		return TL;

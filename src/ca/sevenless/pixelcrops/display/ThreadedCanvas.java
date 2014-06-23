@@ -30,10 +30,19 @@ public class ThreadedCanvas extends Canvas implements Runnable{
 	protected WindowManager graphicsManager;
 	//For graceful cleanup of thread resources
 	boolean notShutdown = true;
+	//Drawing object
+	private DisplayFarm displayFarm;
 	
-	public ThreadedCanvas(int initialFrameRate, WindowManager graphicsManager){
+	//TODO
+	/*
+	 * Threaded canvas needs dependancy inversion to function in an engine. Collection of drawable
+	 * elements with draw interface to feed into the pain function?
+	 */
+	
+	public ThreadedCanvas(int initialFrameRate, WindowManager graphicsManager, DisplayFarm displayFarm){
 		frameRate = initialFrameRate;
 		this.graphicsManager = graphicsManager;
+		this.displayFarm = displayFarm;
 	}
 	
 	
@@ -57,6 +66,7 @@ public class ThreadedCanvas extends Canvas implements Runnable{
         refreshScreen(screenBuffer2D);
         
         //TODO drawing code goes here
+        displayFarm.draw(screenBuffer2D);
 		
         screen.drawImage(buffer, 0, 0, this);
 	}

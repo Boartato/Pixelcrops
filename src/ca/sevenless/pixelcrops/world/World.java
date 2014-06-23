@@ -33,8 +33,9 @@ public class World implements Serializable{
 		worldTileSet = makeBlankTileSet(farmX,farmY);
 		currentTimer = null;
 		this.turnTime = turnTime;
+		//TODO this should come from the GameInitialization code, not hardcoded
 		playerFarm.sowSeed(0,0, new Berry(150,150,150));
-		
+		playerFarm.sowSeed(farmX-1, farmY-1, new Berry(150,150,150));
 	}
 	
 	/**
@@ -67,6 +68,14 @@ public class World implements Serializable{
 				newTileSet[j][i] = new Tile(null);
 		
 		return newTileSet;
+	}
+	
+	/**
+	 * Retrieves the interface for communicating with the game logic
+	 * @return Returns the FarmInterface for the playerFarm
+	 */
+	public FarmInterface getFarmInterface(){
+		return playerFarm;
 	}
 	
 	public void saveWorld(String path){

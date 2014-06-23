@@ -18,7 +18,9 @@ import ca.sevenless.pixelcrops.display.util.GraphicsLoader.NoAcceptedImageFormat
 import ca.sevenless.pixelcrops.gui.GameKeyListener;
 import ca.sevenless.pixelcrops.gui.GameMouseListener;
 import ca.sevenless.pixelcrops.init.GameInitialization;
+import ca.sevenless.pixelcrops.util.BoxCoord;
 import ca.sevenless.pixelcrops.world.Tile;
+import ca.sevenless.pixelcrops.world.farm.FarmInterface;
 
 
 
@@ -55,7 +57,8 @@ public class WindowManager {
 							GameMouseListener mouseListener, 
 							String graphicResourceDirectory, 
 							Iterable<String> imageFormats, 
-							Tile[][] tileSet,
+							BoxCoord farmLocation,
+							FarmInterface farmInterface,
 							boolean _fullscreen, 
 							int _frameRate) throws IOException {
 		main = _main;
@@ -63,8 +66,8 @@ public class WindowManager {
 		frameRate = _frameRate;
 		
 		loadGraphicResources(graphicResourceDirectory, imageFormats);
-		initDisplayObjects(tileSet);
-		initThreadedCanvas();
+		initDisplayObjects(farmLocation, farmInterface);
+		initThreadedCanvas(displayFarm);
 		initFrame();
 		attachListeners(keyListener, mouseListener);
 		
@@ -96,11 +99,11 @@ public class WindowManager {
 		
 	}
 	
-	private void initDisplayObjects(Tile[][] tileSet){
+	private void initDisplayObjects(BoxCoord farmLocation, FarmInterface farmInterface){
 		
 		//TODO initialize Display objects from passed game logic information
 		
-		displayFarm = new DisplayFarm(tileSet);
+		displayFarm = new DisplayFarm(farmLocation, farmInterface);
 		
 	}
 
@@ -137,9 +140,10 @@ public class WindowManager {
 
 	/**
 	 * Creates ThreadedCanvas object and prepares itd for threading.
+	 * @param displayFarm2 
 	 */
-	private void initThreadedCanvas(){
-		canvas = new ThreadedCanvas(frameRate, this);
+	private void initThreadedCanvas(DisplayFarm displayFarm){
+		canvas = new ThreadedCanvas(frameRate, this, displayFarm);
 		displayThread = new Thread(canvas);
 	}
 	

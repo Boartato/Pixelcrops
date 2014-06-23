@@ -6,6 +6,7 @@ package ca.sevenless.pixelcrops.display;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import ca.sevenless.pixelcrops.util.BoxCoord;
 import ca.sevenless.pixelcrops.util.Coord;
 import ca.sevenless.pixelcrops.world.Tile;
 import ca.sevenless.pixelcrops.world.farm.FarmInterface;
@@ -17,16 +18,37 @@ import ca.sevenless.pixelcrops.world.farm.Plant;
  */
 public class DisplayFarm {
 	
-	FarmInterface farmInterface;
+	FarmInterface farm;
+	BoxCoord drawingDimensions;
 	
-	public DisplayFarm(FarmInterface farmInterface){
-		this.farmInterface = farmInterface;
+	/**
+	 * Creates a new Display farm.
+	 * @param drawingDimensions Area on the screen the farm should be drawn
+	 * @param farmInterface The interface for communicating with the logic to find out what to display
+	 */
+	public DisplayFarm(BoxCoord drawingDimensions, FarmInterface farmInterface){
+		this.drawingDimensions = drawingDimensions;
+		this.farm= farmInterface;
 	}
 	
+	/**
+	 * Resizes the drawing dimensions to fit the BoxCoord passed as a parameter
+	 * @param newDimensions New dimensions of the farm drawing area
+	 */
+	public void resize(BoxCoord newDimensions){
+		this.drawingDimensions = newDimensions;
+	}
 	
-	
-	void drawFarm(int x, int y, int sizeX, int sizeY, FarmInterface farm, Graphics2D screenBuffer2d){
+	/*
+	 * Draws a farm onto the given Graphics2D object using the drawingDimensions field to determine
+	 * where things should be drawn.
+	 */
+	void draw(Graphics2D screenBuffer2d){
 		
+		int x = drawingDimensions.getTL().getX();
+		int y = drawingDimensions.getTL().getY();
+		int sizeX = drawingDimensions.getBR().getX() - x;
+		int sizeY = drawingDimensions.getBR().getY() - y;
 		
 		int fieldsX = farm.getX();
 		int fieldsY = farm.getY();

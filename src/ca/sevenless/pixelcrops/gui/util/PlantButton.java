@@ -3,6 +3,7 @@ package ca.sevenless.pixelcrops.gui.util;
 import java.awt.image.BufferedImage;
 
 import ca.sevenless.pixelcrops.util.BoxCoord;
+import ca.sevenless.pixelcrops.world.farm.Farm;
 import ca.sevenless.pixelcrops.world.inventory.Inventory;
 
 /**
@@ -11,13 +12,13 @@ import ca.sevenless.pixelcrops.world.inventory.Inventory;
  */
 public class PlantButton<T> extends Button {
 
-    Inventory<T> inventory;
+    Farm farm;
     boolean used;
     int x, y;
-    public PlantButton(ButtonManager parent, BoxCoord _box, BufferedImage _graphic, Inventory<T> inventory, int x, int y)
+    public PlantButton(ButtonManager parent, BoxCoord _box, BufferedImage _graphic, Farm farm, int x, int y)
     {
         super(parent, _box, _graphic);
-        this.inventory = inventory;
+        this.farm = farm;
         used = false;
         this.x = x;
         this.y = y;

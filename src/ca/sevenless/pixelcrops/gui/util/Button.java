@@ -7,6 +7,7 @@ import ca.sevenless.pixelcrops.util.Coord;
 
 public class Button extends HitBox {
 	BufferedImage graphic;
+	String buttonName;
 	//Dimensions of the graphic
 	int width;
 	int height;
@@ -25,11 +26,32 @@ public class Button extends HitBox {
         		coord.getX(),coord.getY(),
         		width,height, null);
 	}
+	
 
 
 	@Override
 	public void clickCode() {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+	public BufferedImage getGraphic() {
+		return graphic;
+	}
+
+
+	public void setGraphic(BufferedImage graphic) {
+		this.graphic = graphic;
+	}
+
+
+	public String getButtonName() {
+		return buttonName;
+	}
+
+
+	public void setButtonName(String buttonName) {
+		this.buttonName = buttonName;
 	}
 }

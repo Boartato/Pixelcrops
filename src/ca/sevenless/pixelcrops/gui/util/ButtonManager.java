@@ -15,13 +15,13 @@ import ca.sevenless.pixelcrops.util.BoxCoord;
  */
 public class ButtonManager{
 
-	private ArrayList<HitBox> buttonList;
+	public ArrayList<Button> buttonList;
 	
 	BoxCoord box;
 	
 	public ButtonManager(BoxCoord _box){
 		box = _box;
-		buttonList = new ArrayList<HitBox>();
+		buttonList = new ArrayList<Button>();
 		
 	}
 	

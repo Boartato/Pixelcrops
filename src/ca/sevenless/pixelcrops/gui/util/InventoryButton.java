@@ -1,5 +1,6 @@
 package ca.sevenless.pixelcrops.gui.util;
 
+import ca.sevenless.pixelcrops.gui.Holder;
 import ca.sevenless.pixelcrops.util.BoxCoord;
 import ca.sevenless.pixelcrops.world.inventory.Inventory;
 
@@ -14,8 +15,10 @@ import java.awt.image.BufferedImage;
 public class InventoryButton<T> extends Button {
 
     Inventory<T> inventory;
+    
     boolean used;
     int x, y;
+    T item;
     public InventoryButton(ButtonManager parent, BoxCoord _box, BufferedImage _graphic, Inventory<T> inventory, int x, int y)
     {
         super(parent, _box, _graphic);
@@ -25,26 +28,35 @@ public class InventoryButton<T> extends Button {
         this.y = y;
 
     }
+  
+    
     public void usedTrue()
     {
         used = true;
     }
+   
     public void usedFalse()
     {
         used = false;
     }
-    public void clickCode() {
-        if(!used)
+    @SuppressWarnings("unchecked")
+	public void clickCode() {
+        if(used == true)
         {
-
-            inventory.addItem(inventory.peekItem(20,20));//only works if Byref
-            inventory.removeItem(20,20);
+        	item = inventory.removeItem(x, y);
+        	this.returnItem(item);
+           
         }
         else
         {
-            inventory.addItem(inventory.removeItem(20,20)); //only works if byref
-
+        	
+        	inventory.addItem(item);
+        
         }
 
+    }
+    public T returnItem( T item){
+		return item;
+    	
     }
 }

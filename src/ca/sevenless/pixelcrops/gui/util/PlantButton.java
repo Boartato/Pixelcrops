@@ -22,6 +22,28 @@ public class PlantButton<T> extends Button {
         used = false;
         this.x = x;
         this.y = y;
+       
 
+    }
+    public void usedTrue()
+    {
+        used = true;
+    }
+   
+    public void usedFalse()
+    {
+        used = false;
+    }
+    
+    public void clickCode(){
+    	if(used == true)
+    	{
+    		farm.waterField(x, y);
+    	}
+    	else
+    	{
+    		farm.sowSeed(x, y, farm.getSeed());
+    	}
+    	
     }
 }

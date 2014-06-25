@@ -7,8 +7,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import ca.sevenless.pixelcrops.display.WindowManager;
-import ca.sevenless.pixelcrops.display.ThreadedCanvas;
 import ca.sevenless.pixelcrops.display.util.Sprite;
+import ca.sevenless.pixelcrops.display.util.ThreadedCanvas;
 import ca.sevenless.pixelcrops.display.util.Sprite.SpriteImageMissingException;
 import ca.sevenless.pixelcrops.util.Coord;
 import ca.sevenless.pixelcrops.world.farm.Farm;

@@ -11,9 +11,13 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import ca.sevenless.pixelcrops.display.util.Drawable;
 import ca.sevenless.pixelcrops.display.util.GraphicsHolder;
 import ca.sevenless.pixelcrops.display.util.GraphicsLoader;
+import ca.sevenless.pixelcrops.display.util.ThreadedCanvas;
 import ca.sevenless.pixelcrops.display.util.GraphicsLoader.NoAcceptedImageFormatsException;
 import ca.sevenless.pixelcrops.gui.GameKeyListener;
 import ca.sevenless.pixelcrops.gui.GameMouseListener;
@@ -143,7 +147,10 @@ public class WindowManager {
 	 * @param displayFarm2 
 	 */
 	private void initThreadedCanvas(DisplayFarm displayFarm){
-		canvas = new ThreadedCanvas(frameRate, this, displayFarm);
+		List<Drawable> drawables = new ArrayList<Drawable>();
+		drawables.add(displayFarm);
+		
+		canvas = new ThreadedCanvas(frameRate, this, drawables );
 		displayThread = new Thread(canvas);
 	}
 	

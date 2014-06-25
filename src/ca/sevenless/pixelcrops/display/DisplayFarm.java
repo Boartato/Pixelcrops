@@ -6,6 +6,7 @@ package ca.sevenless.pixelcrops.display;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import ca.sevenless.pixelcrops.display.util.Drawable;
 import ca.sevenless.pixelcrops.util.BoxCoord;
 import ca.sevenless.pixelcrops.util.Coord;
 import ca.sevenless.pixelcrops.world.Tile;
@@ -16,10 +17,11 @@ import ca.sevenless.pixelcrops.world.farm.Plant;
  * @author Sevenless
  *
  */
-public class DisplayFarm {
+public class DisplayFarm implements Drawable{
 	
 	FarmInterface farm;
 	BoxCoord drawingDimensions;
+	private boolean visible = true;
 	
 	/**
 	 * Creates a new Display farm.
@@ -43,7 +45,7 @@ public class DisplayFarm {
 	 * Draws a farm onto the given Graphics2D object using the drawingDimensions field to determine
 	 * where things should be drawn.
 	 */
-	void draw(Graphics2D screenBuffer2d){
+	public void draw(Graphics2D screenBuffer2d){
 		
 		int x = drawingDimensions.getTL().getX();
 		int y = drawingDimensions.getTL().getY();
@@ -121,6 +123,14 @@ public class DisplayFarm {
 	private void drawColoredSquare(Color color, int x, int y, int size, Graphics2D screenBuffer2d){
 		screenBuffer2d.setColor(color);
 		screenBuffer2d.fillRect( x, y, size, size);
+	}
+
+	/* (non-Javadoc)
+	 * @see ca.sevenless.pixelcrops.display.util.Drawable#isVisible()
+	 */
+	@Override
+	public boolean isVisible() {
+		return visible;
 	}
 
 }

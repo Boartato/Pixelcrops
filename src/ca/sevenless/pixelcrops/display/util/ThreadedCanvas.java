@@ -1,13 +1,18 @@
 /**
  * 
  */
-package ca.sevenless.pixelcrops.display;
+package ca.sevenless.pixelcrops.display.util;
 
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
+
+import ca.sevenless.pixelcrops.display.DisplayFarm;
+import ca.sevenless.pixelcrops.display.WindowManager;
 
 
 /**
@@ -29,9 +34,11 @@ public class ThreadedCanvas extends Canvas implements Runnable{
 	//Location of display objects used for displaying Pixelcrops objects like farms and etc
 	protected WindowManager graphicsManager;
 	//For graceful cleanup of thread resources
-	boolean notShutdown = true;
+	public boolean notShutdown = true;
 	//Drawing object
 	private DisplayFarm displayFarm;
+	
+	private List<Drawable> displayObjectList;
 	
 	//TODO
 	/*
@@ -39,10 +46,15 @@ public class ThreadedCanvas extends Canvas implements Runnable{
 	 * elements with draw interface to feed into the pain function?
 	 */
 	
-	public ThreadedCanvas(int initialFrameRate, WindowManager graphicsManager, DisplayFarm displayFarm){
+	public ThreadedCanvas(int initialFrameRate, WindowManager graphicsManager, Iterable<Drawable> displayObjects){
 		frameRate = initialFrameRate;
 		this.graphicsManager = graphicsManager;
-		this.displayFarm = displayFarm;
+		
+		displayObjectList = new ArrayList<Drawable>();
+		
+		for (Drawable displayObject : displayObjects)
+			displayObjectList.add(displayObject);
+		
 	}
 	
 	
@@ -65,8 +77,9 @@ public class ThreadedCanvas extends Canvas implements Runnable{
         Graphics2D screenBuffer2D = (Graphics2D) bufferG;
         refreshScreen(screenBuffer2D);
         
-        //TODO drawing code goes here
-        displayFarm.draw(screenBuffer2D);
+        for (Drawable displayObject : displayObjectList)
+        	if (displayObject.isVisible())
+        		displayObject.draw(screenBuffer2D); //TODO will need more work in order to draw multi layer images 
 		
         screen.drawImage(buffer, 0, 0, this);
 	}
@@ -98,7 +111,12 @@ public class ThreadedCanvas extends Canvas implements Runnable{
 		
 	}
 	
-	
+	/**
+	 * Called to force shutdown of the painting thread for this canvas
+	 */
+	public void shutdown(){
+		notShutdown = false;
+	}
 	
 	/**
 	 * Called by the repaint function

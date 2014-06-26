@@ -45,7 +45,8 @@ public class GUIManager extends ButtonManager {
 				b.clickCheck(relMouseX, relMouseY);
 				//change image
 				try {
-					b.setGraphic(g.find(b.getButtonName() + "2"));
+					b.setGraphic(g.find(b.getButtonName()));
+					// new method needed to change button image
 				} catch (GraphicNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -1,6 +1,7 @@
-package ca.sevenless.pixelcrops.gui.util;
+package ca.sevenless.pixelcrops.gui;
 
-import ca.sevenless.pixelcrops.gui.Holder;
+import ca.sevenless.pixelcrops.gui.util.Button;
+import ca.sevenless.pixelcrops.gui.util.ButtonManager;
 import ca.sevenless.pixelcrops.util.BoxCoord;
 import ca.sevenless.pixelcrops.world.inventory.Inventory;
 
@@ -29,12 +30,16 @@ public class InventoryButton<T> extends Button {
 
     }
   
-    
+    /*
+     * sets the used attribute to true, represents the inventory slot being used 
+     */
     public void usedTrue()
     {
         used = true;
     }
-   
+    /*
+     * sets used attribute to false, represents the inventory slot being empty
+     */
     public void usedFalse()
     {
         used = false;
@@ -55,6 +60,9 @@ public class InventoryButton<T> extends Button {
         }
 
     }
+    /*
+     * returns item in slot 
+     */
     public T returnItem( T item){
 		return item;
     	

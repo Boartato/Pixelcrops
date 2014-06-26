@@ -90,6 +90,9 @@ public class Farm implements Serializable, FarmInterface{
 	public int getY() {
 		return field[0].length;
 	}
+
+
+	
 	
 	
 }

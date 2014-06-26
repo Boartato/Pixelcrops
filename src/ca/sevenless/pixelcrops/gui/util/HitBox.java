@@ -21,11 +21,9 @@ public abstract class HitBox {
 	
 	
 	/**
-	 * Creates a new Button with the given parameters
-	 * @param x1
-	 * @param y1
-	 * @param x2
-	 * @param y2
+	 * Creates Hitbox using Box coord
+	 * @param parent
+	 * @param _box
 	 */
 	public HitBox (ButtonManager parent,  BoxCoord _box){
 		this.parent = parent;
@@ -106,7 +104,7 @@ public abstract class HitBox {
 	/**
 	 * Returns true if the relative click location is within the button's relative bounds and runs the clickCode
 	 * 
-	 * @param relativeX Relative X location of the mouse with regards to the parnt
+	 * @param relativeX Relative X location of the mouse with regards to the parent
 	 * @param relativeY Relative Y location of the mouse with regards to the parent
 	 * @return
 	 * True if the click event happens within the button

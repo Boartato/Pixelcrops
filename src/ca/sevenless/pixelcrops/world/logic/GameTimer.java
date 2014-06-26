@@ -3,10 +3,7 @@ package ca.sevenless.pixelcrops.world.logic;
 import java.util.*;
 
 import ca.sevenless.pixelcrops.world.farm.Farm;
-<<<<<<< HEAD:src/ca/sevenless/pixelcrops/world/farm/GameTimer.java
-=======
 import ca.sevenless.pixelcrops.world.farm.FarmInterface;
->>>>>>> origin/master:src/ca/sevenless/pixelcrops/world/logic/GameTimer.java
 /**
  * 
  * @author anooptoor 

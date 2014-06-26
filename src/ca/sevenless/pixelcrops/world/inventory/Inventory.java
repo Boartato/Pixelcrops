@@ -21,6 +21,9 @@ public class Inventory<T> implements Serializable, InventoryInterface<T>{
 	T[][] invSlots;
 	//Items that were unable to be placed in the inventory and are waiting for slots to be shown to the player
 	ArrayList<T> overflow;
+	//Slot for an object currently being held in the cursor.
+	@SuppressWarnings("unused")
+	private T pickupSlot;
 	
 	/**
 	 * Creates a new inventory of size x*y and instantiates an overflow list
@@ -30,7 +33,6 @@ public class Inventory<T> implements Serializable, InventoryInterface<T>{
 	@SuppressWarnings("unchecked")
 	public Inventory(int x, int y){
 		invSlots = (T[][]) new Object[x][y];
-        pickupSlot = (T) new Object();
 		overflow = new ArrayList<T>();
 	}
 	

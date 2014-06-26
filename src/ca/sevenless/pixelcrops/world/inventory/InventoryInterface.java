@@ -41,6 +41,5 @@ public interface InventoryInterface<T> {
 	 * @return false if the addition was unsuccessful
 	 */
 	public boolean addItem(T newItem, int x, int y);
-
 	
 }

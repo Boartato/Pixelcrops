@@ -3,23 +3,28 @@
  */
 package ca.sevenless.pixelcrops.display;
 
-import java.awt.Canvas;
 import java.awt.Frame;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.Window;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import ca.sevenless.pixelcrops.display.util.Drawable;
+import ca.sevenless.pixelcrops.display.util.GraphicsHolder;
+import ca.sevenless.pixelcrops.display.util.GraphicsLoader;
+import ca.sevenless.pixelcrops.display.util.ThreadedCanvas;
+import ca.sevenless.pixelcrops.display.util.GraphicsLoader.NoAcceptedImageFormatsException;
 import ca.sevenless.pixelcrops.gui.GameKeyListener;
 import ca.sevenless.pixelcrops.gui.GameMouseListener;
 import ca.sevenless.pixelcrops.init.GameInitialization;
-import ca.sevenless.pixelcrops.util.ImageLoader;
+import ca.sevenless.pixelcrops.util.BoxCoord;
 import ca.sevenless.pixelcrops.world.Tile;
+import ca.sevenless.pixelcrops.world.farm.FarmInterface;
 
 
 
@@ -28,13 +33,14 @@ import ca.sevenless.pixelcrops.world.Tile;
  * @author Sevenless
  *
  */
-public class GraphicsManager {
+public class WindowManager {
 	private Frame frame;
 	private ThreadedCanvas canvas;
 	
 	private GameInitialization main;
 	private Thread displayThread;
 	
+	protected GraphicsHolder graphicsHolder;
 	protected DisplayFarm displayFarm;
 	
 	private boolean fullscreen = false;
@@ -45,21 +51,27 @@ public class GraphicsManager {
 	 * Initializes a frame and attaches the created canvas to it
 	 * @param mouseListener 
 	 * @param keyListener 
+	 * @param graphicResourceDirectory 
+	 * @param imageFormats 
 	 * @param _canvas
+	 * @throws IOException 
 	 */
-	public GraphicsManager(	GameInitialization _main,
+	public WindowManager(	GameInitialization _main,
 							GameKeyListener keyListener, 
 							GameMouseListener mouseListener, 
-							Tile[][] tileSet,
+							String graphicResourceDirectory, 
+							Iterable<String> imageFormats, 
+							BoxCoord farmLocation,
+							FarmInterface farmInterface,
 							boolean _fullscreen, 
-							int _frameRate) {
+							int _frameRate) throws IOException {
 		main = _main;
 		fullscreen = _fullscreen;
 		frameRate = _frameRate;
 		
-		loadGraphicResources();
-		initDisplayObjects(tileSet);
-		initThreadedCanvas();
+		loadGraphicResources(graphicResourceDirectory, imageFormats);
+		initDisplayObjects(farmLocation, farmInterface);
+		initThreadedCanvas(displayFarm);
 		initFrame();
 		attachListeners(keyListener, mouseListener);
 		
@@ -67,17 +79,35 @@ public class GraphicsManager {
 		makeVisible();
 	}
 	
-	private void loadGraphicResources(){
+	
+	/**
+	 * Loads graphics from the given resource directory after creating a GraphicsLoader class which loads files 
+	 * ending with the given acceptable imageFormats.
+	 * 
+	 * @param graphicResourceDirectory Name of the top level directory containing graphic resources
+	 * @param imageFormats Only files ending in these formats are loaded, others are ignored
+	 * @throws IOException Thrown if the loader encounters a system based input/output exception
+	 */
+	private void loadGraphicResources(String graphicResourceDirectory, Iterable<String> imageFormats) throws IOException{
 		
-		//TODO load graphical resources required from memory here
+		GraphicsLoader graphicsLoader = new GraphicsLoader(imageFormats);
+		graphicsHolder = new GraphicsHolder();
+		
+		try {
+			graphicsLoader.loadGraphics(graphicResourceDirectory, graphicsHolder);
+		} catch (NoAcceptedImageFormatsException e) {
+			System.out.println("Corrupted setup files, no acceptable image formats given in init");
+			e.printStackTrace();//Should only happen in case of corrupted setup files
+		}
+		
 		
 	}
 	
-	private void initDisplayObjects(Tile[][] tileSet){
+	private void initDisplayObjects(BoxCoord farmLocation, FarmInterface farmInterface){
 		
 		//TODO initialize Display objects from passed game logic information
 		
-		displayFarm = new DisplayFarm(tileSet);
+		displayFarm = new DisplayFarm(farmLocation, farmInterface);
 		
 	}
 
@@ -114,9 +144,13 @@ public class GraphicsManager {
 
 	/**
 	 * Creates ThreadedCanvas object and prepares itd for threading.
+	 * @param displayFarm2 
 	 */
-	private void initThreadedCanvas(){
-		canvas = new ThreadedCanvas(frameRate, this);
+	private void initThreadedCanvas(DisplayFarm displayFarm){
+		List<Drawable> drawables = new ArrayList<Drawable>();
+		drawables.add(displayFarm);
+		
+		canvas = new ThreadedCanvas(frameRate, this, drawables );
 		displayThread = new Thread(canvas);
 	}
 	

@@ -5,8 +5,9 @@ package ca.sevenless.pixelcrops.display;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
+import ca.sevenless.pixelcrops.display.util.Drawable;
+import ca.sevenless.pixelcrops.util.BoxCoord;
 import ca.sevenless.pixelcrops.util.Coord;
 import ca.sevenless.pixelcrops.world.Tile;
 import ca.sevenless.pixelcrops.world.farm.FarmInterface;
@@ -16,24 +17,40 @@ import ca.sevenless.pixelcrops.world.farm.Plant;
  * @author Sevenless
  *
  */
-public class DisplayFarm {
+public class DisplayFarm implements Drawable{
 	
-	private DisplayTile[][] tileSet;
+	FarmInterface farm;
+	BoxCoord drawingDimensions;
+	private boolean visible = true;
 	
-	public DisplayFarm(Tile[][] tileSet){
-		this.tileSet = makeDisplayTiles(tileSet);
+	/**
+	 * Creates a new Display farm.
+	 * @param drawingDimensions Area on the screen the farm should be drawn
+	 * @param farmInterface The interface for communicating with the logic to find out what to display
+	 */
+	public DisplayFarm(BoxCoord drawingDimensions, FarmInterface farmInterface){
+		this.drawingDimensions = drawingDimensions;
+		this.farm= farmInterface;
 	}
 	
-	private DisplayTile[][] makeDisplayTiles(Tile[][] tileSet){
-		DisplayTile[][] displayTileSet = new DisplayTile[tileSet.length][tileSet[0].length];
-		
-		
-		
-		return displayTileSet;
+	/**
+	 * Resizes the drawing dimensions to fit the BoxCoord passed as a parameter
+	 * @param newDimensions New dimensions of the farm drawing area
+	 */
+	public void resize(BoxCoord newDimensions){
+		this.drawingDimensions = newDimensions;
 	}
-
-	void drawFarm(int x, int y, int sizeX, int sizeY, FarmInterface farm, Graphics2D screenBuffer2d){
+	
+	/*
+	 * Draws a farm onto the given Graphics2D object using the drawingDimensions field to determine
+	 * where things should be drawn.
+	 */
+	public void draw(Graphics2D screenBuffer2d){
 		
+		int x = drawingDimensions.getTL().getX();
+		int y = drawingDimensions.getTL().getY();
+		int sizeX = drawingDimensions.getBR().getX() - x;
+		int sizeY = drawingDimensions.getBR().getY() - y;
 		
 		int fieldsX = farm.getX();
 		int fieldsY = farm.getY();
@@ -45,9 +62,7 @@ public class DisplayFarm {
 		int fieldSize = fieldWidth;
 		if (fieldWidth > fieldHeight)
 			fieldSize = fieldHeight;
-		
-		drawTileSet(new Coord(x,y), new Coord(x+sizeX,y+sizeY), screenBuffer2d);
-		
+			
 		for (int j = 0; j < fieldsX; j++)
 			for (int i = 0; i < fieldsY; i++){
 				Plant thisPlant = farm.getField(j, i);
@@ -96,24 +111,6 @@ public class DisplayFarm {
 		}
 	}
 	
-	private void drawTileSet(Coord coordTL, Coord coordBR, Graphics2D screenBuffer2d){
-		
-		int tileWidth = (coordBR.getX() - coordTL.getX() ) / tileSet.length;
-		int tileHeight = (coordBR.getY() - coordTL.getY()) / tileSet[0].length;
-		
-		for (int j = 0; j < tileSet.length; j++)
-			for (int i = 0; i < tileSet[0].length; i++){
-				Coord topLeft =  new Coord(coordTL.getX()+j*tileWidth, coordTL.getY()+i*tileHeight);
-				Coord bottomRight = new Coord(topLeft).transform(tileWidth,tileHeight);
-				tileSet[j][i].drawTile(topLeft, bottomRight, screenBuffer2d);
-			}
-		
-	}
-	
-
-	
-	
-	
 	/**
 	 * Draws a square of the provided colour/size at the given x/y coords on the provided 2D buffer.
 	 * 
@@ -126,6 +123,14 @@ public class DisplayFarm {
 	private void drawColoredSquare(Color color, int x, int y, int size, Graphics2D screenBuffer2d){
 		screenBuffer2d.setColor(color);
 		screenBuffer2d.fillRect( x, y, size, size);
+	}
+
+	/* (non-Javadoc)
+	 * @see ca.sevenless.pixelcrops.display.util.Drawable#isVisible()
+	 */
+	@Override
+	public boolean isVisible() {
+		return visible;
 	}
 
 }

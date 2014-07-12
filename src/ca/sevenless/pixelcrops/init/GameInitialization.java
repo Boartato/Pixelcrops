@@ -10,13 +10,14 @@ import java.util.List;
 import ca.sevenless.pixelcrops.display.WindowManager;
 import ca.sevenless.pixelcrops.gui.GameKeyListener;
 import ca.sevenless.pixelcrops.gui.GameMouseListener;
+import ca.sevenless.pixelcrops.gui.util.ButtonManager;
 import ca.sevenless.pixelcrops.util.BoxCoord;
 import ca.sevenless.pixelcrops.world.World;
 
 /**
  * Initializes game client
  * 
- * @author Sevenless
+ * @author Sevenless AnoopToor
  *
  */
 public class GameInitialization {
@@ -24,7 +25,8 @@ public class GameInitialization {
 	private WindowManager graphicsManager;
 	private GameKeyListener keyListener;
 	private GameMouseListener mouseListener;
-
+	private ButtonManager plotButtonManager;
+	private ButtonManager inventoryButtonManager;
 	private World gameWorld;
 	
 	/*
@@ -57,6 +59,7 @@ public class GameInitialization {
 
 		initListeners();
 		initGameWorld();
+		initButtons(); 
 		//TODO don't pass a null tileSet like you're doing you lazy bumkisser
 		try {
 			graphicsManager = new WindowManager(this, 
@@ -90,7 +93,15 @@ public class GameInitialization {
 	 */
 	private void initListeners(){
 		keyListener = new GameKeyListener(this);
-		mouseListener = new GameMouseListener(this, null);
+		mouseListener = new GameMouseListener(this, new ButtonManager(farmLocation ) );//Check this out
+	}
+	/**
+	 * Initliazes the buttons nessacary for the games
+	 */
+	private void initButtons(){
+		//unfinished
+		plotButtonManager = new ButtonManager();
+		inventoryButtonManager = new ButtonManager();
 	}
 	
 	/**

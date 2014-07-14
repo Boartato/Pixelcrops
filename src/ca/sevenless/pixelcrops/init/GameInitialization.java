@@ -44,7 +44,7 @@ public class GameInitialization {
 	
 	//Default location of farm
 	private BoxCoord farmLocation= new BoxCoord(0,0,100,100);
-	
+	private BoxCoord inventoryLocation= new BoxCoord(0,0,100,100); //potentially change
 	//milliseconds between gametimer farm updates
 	private int turnTime = 1000;
 	
@@ -100,8 +100,8 @@ public class GameInitialization {
 	 */
 	private void initButtons(){
 		//unfinished
-		plotButtonManager = new ButtonManager();
-		inventoryButtonManager = new ButtonManager();
+		plotButtonManager = new ButtonManager(farmLocation);
+		inventoryButtonManager = new ButtonManager(inventoryLocation);
 	}
 	
 	/**
